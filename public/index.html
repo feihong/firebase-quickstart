@@ -8,11 +8,11 @@
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAaeffl7wCApcEcNJLhpEe0oZqjKTC32bU",
-      authDomain: "event-announcer-d759d.firebaseapp.com",
-      databaseURL: "https://event-announcer-d759d.firebaseio.com",
-      projectId: "event-announcer-d759d",
-      storageBucket: "event-announcer-d759d.appspot.com",
-      messagingSenderId: "919797154186"
+      // authDomain: "event-announcer-d759d.firebaseapp.com",
+      // databaseURL: "https://event-announcer-d759d.firebaseio.com",
+      // projectId: "event-announcer-d759d",
+      // storageBucket: "event-announcer-d759d.appspot.com",
+      // messagingSenderId: "919797154186"
     };
     firebase.initializeApp(config);
   </script>
@@ -29,6 +29,7 @@
           var phoneNumber = user.phoneNumber;
           var providerData = user.providerData;
           user.getIdToken().then(function(accessToken) {
+            console.log('Access token:', accessToken)
             document.getElementById('sign-in-status').textContent = 'Signed in';
             document.getElementById('sign-in').textContent = 'Sign out';
             document.getElementById('account-details').value = JSON.stringify({
@@ -41,12 +42,14 @@
               accessToken: accessToken,
               providerData: providerData
             }, null, 2);
+
+            $.get('/verify', {token: accessToken}, function(data) {
+              console.log('Response:', data)
+            })
           });
         } else {
-          // User is signed out.
-          document.getElementById('sign-in-status').textContent = 'Signed out';
-          document.getElementById('sign-in').textContent = 'Sign in';
-          document.getElementById('account-details').textContent = 'null';
+          // User is signed out, redirect to login page.
+          window.location.href = '/login.html'
         }
       }, function(error) {
         console.log('Error:', error);
@@ -63,5 +66,10 @@
   <div id="sign-in-status"></div>
   <div id="sign-in"></div>
   <textarea id="account-details" style="width: 100%" rows="30"></textarea>
+
+  <script
+	  src="http://code.jquery.com/jquery-3.2.1.min.js"
+	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	  crossorigin="anonymous"></script>
 </body>
 </html>
