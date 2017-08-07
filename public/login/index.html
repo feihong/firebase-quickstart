@@ -8,11 +8,7 @@
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAaeffl7wCApcEcNJLhpEe0oZqjKTC32bU",
-      authDomain: "event-announcer-d759d.firebaseapp.com",
-      // databaseURL: "https://event-announcer-d759d.firebaseio.com",
-      // projectId: "event-announcer-d759d",
-      // storageBucket: "event-announcer-d759d.appspot.com",
-      // messagingSenderId: "919797154186"
+      authDomain: "event-announcer-d759d.firebaseapp.com"
     };
     firebase.initializeApp(config);
   </script>
@@ -25,11 +21,6 @@
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        // firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        // firebase.auth.PhoneAuthProvider.PROVIDER_ID
       ],
       // Terms of service url.
       tosUrl: '<your-tos-url>'
@@ -45,7 +36,7 @@
 <body>
   <!-- The surrounding HTML is left untouched by FirebaseUI.
        Your app may use that space for branding, controls and other customizations.-->
-  <h1>Welcome to My Awesome App</h1>
+  <h1>Login page</h1>
   <div id="firebaseui-auth-container"></div>
 </body>
 </html>

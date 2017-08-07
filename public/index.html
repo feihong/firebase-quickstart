@@ -8,11 +8,6 @@
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAaeffl7wCApcEcNJLhpEe0oZqjKTC32bU",
-      // authDomain: "event-announcer-d759d.firebaseapp.com",
-      // databaseURL: "https://event-announcer-d759d.firebaseio.com",
-      // projectId: "event-announcer-d759d",
-      // storageBucket: "event-announcer-d759d.appspot.com",
-      // messagingSenderId: "919797154186"
     };
     firebase.initializeApp(config);
   </script>
@@ -31,7 +26,6 @@
           user.getIdToken().then(function(accessToken) {
             console.log('Access token:', accessToken)
             document.getElementById('sign-in-status').textContent = 'Signed in';
-            document.getElementById('sign-in').textContent = 'Sign out';
             document.getElementById('account-details').value = JSON.stringify({
               displayName: displayName,
               email: email,
@@ -46,10 +40,14 @@
             $.get('/verify', {token: accessToken}, function(data) {
               console.log('Response:', data)
             })
+
+            $('button#sign-out').on('click', () => {
+              firebase.auth().signOut()
+            })
           });
         } else {
           // User is signed out, redirect to login page.
-          window.location.href = '/login.html'
+          window.location.href = '/login/'
         }
       }, function(error) {
         console.log('Error:', error);
@@ -64,7 +62,7 @@
 <body>
   <h1>Welcome to My Awesome App</h1>
   <div id="sign-in-status"></div>
-  <div id="sign-in"></div>
+  <button id="sign-out">Sign out</button>
   <textarea id="account-details" style="width: 100%" rows="30"></textarea>
 
   <script
