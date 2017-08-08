@@ -1,10 +1,10 @@
 const Koa = require('koa')
-const router = require('koa-router')()
 
 const app = new Koa()
+const router = require('koa-router')()
 app.use(require('koa-static')('public'))
 
-const config = require('./config.json')
+const config = require('./config')
 const admin = require('firebase-admin')
 admin.initializeApp({
   credential: admin.credential.cert(config.serviceAccount),
@@ -15,14 +15,13 @@ admin.initializeApp({
 // https://firebase.google.com/docs/auth/admin/verify-id-tokens
 router.get('/verify', async (ctx, next) => {
   let idToken = ctx.request.query.token
-  // console.log('ID token:', idToken)
 
   let decodedToken = await admin.auth().verifyIdToken(idToken)
-  // console.log('Decoded token:', decodedToken)
-  console.log('Email:', decodedToken.email)
-  console.log('Email verified?:', decodedToken.email_verified)
+  let result =
+    decodedToken.email_verified && config.users.includes(decodedToken.email)
 
-  ctx.response.body = 'ok'
+  ctx.response.type = 'json'
+  ctx.response.body = {success: result}
 })
 
 app.use(router.routes())

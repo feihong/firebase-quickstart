@@ -7,15 +7,17 @@ admin.initializeApp({
   databaseURL: `https://${config.serviceAccount.project_id}.firebaseio.com`
 })
 
+const moment = require('moment')
+
 const db = admin.database()
 let ref = db.ref('events/read')
 itemRef = ref.child('facebook:siskelfilmcenter')
 
 itemRef.set({
-  111: true,
-  222: true,
-  333: true,
-  444: true,
+  111: moment().format(),
+  222: moment().add(2, 'days').format(),
+  333: null,
+  444: moment().add(3, 'weeks').format(),
 }).then(() => {
   console.log('Finished writing to database!')
 })
