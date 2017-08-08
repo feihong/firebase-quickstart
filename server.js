@@ -4,13 +4,11 @@ const router = require('koa-router')()
 const app = new Koa()
 app.use(require('koa-static')('public'))
 
-const admin = require("firebase-admin");
-const serviceAccount = require("./service_account_key.json")
 const config = require('./config.json')
-
+const admin = require('firebase-admin')
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: `https://${config.database_name}.firebaseio.com`
+  credential: admin.credential.cert(config.serviceAccount),
+  databaseURL: `https://${config.serviceAccount.project_id}.firebaseio.com`
 })
 
 // How to verify tokens:
